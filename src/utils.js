@@ -22,12 +22,19 @@ function loadEnv(context) {
   return process
 }
 
+
+function getCredentials(context) {
+  const _env = loadEnv(context)
+  return  {
+    domain: _env.env.PROLIBU_ACCOUNT,
+    apiKey: _env.env.PROLIBU_API_KEY,
+    secrect: _env.env.PROLIBU_SECRET,
+  }
+}
+
 function getCode (context) {
-  const { vscode } = context
+  const { model, controller } = context
   const code = []
-  const rootPath = vscode.workspace.rootPath 
-  const model = require(path.join(rootPath, 'model.js')) 
-  const controller = require(path.join(rootPath, 'controller.js')) 
 
   const modelKeys = Object.keys(model)
   for (let index = 0; index < modelKeys.length; index++) {
@@ -52,5 +59,6 @@ function getCode (context) {
 
 module.exports = {
   getCode,
-  loadEnv
+  loadEnv,
+  getCredentials
 }
