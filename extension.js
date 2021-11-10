@@ -18,21 +18,25 @@ function activate(context) {
 			let wfolder = vscode.workspace.workspaceFolders[0]
 			let modelUri = vscode.Uri.joinPath(wfolder.uri, 'model.js')
 			let controllerUri = vscode.Uri.joinPath(wfolder.uri, 'controller.js')
+			let attributesUri = vscode.Uri.joinPath(wfolder.uri, 'attributes.json')
 
 			if (!fs.existsSync(modelUri.fsPath)) return vscode.window.showErrorMessage('Please create file model.js in root folder')
 			if (!fs.existsSync(controllerUri.fsPath)) return vscode.window.showErrorMessage('Please create file controller.js in root folder')
+			if (!fs.existsSync(attributesUri.fsPath)) return vscode.window.showErrorMessage('Please create file attributes.json in root folder')
 
 			let modelContent = Buffer.from(await vscode.workspace.fs.readFile(modelUri)).toString('utf8')
 			let controllerContent = Buffer.from(await vscode.workspace.fs.readFile(controllerUri)).toString('utf8')
+			let attributesContent = Buffer.from(await vscode.workspace.fs.readFile(attributesUri)).toString('utf8')
 
 			if (!/module\.exports[ ]*=[ ]*{/g.test(modelContent)) return vscode.window.showErrorMessage('Please exposed as a module your file model.js using module.exports')
 			if (!/module\.exports[ ]*=[ ]*{/g.test(controllerContent)) return vscode.window.showErrorMessage('Please exposed as a module your file controller.js using module.exports')
 
 			let model = requireFromString(modelContent)
 			let controller = requireFromString(controllerContent)
+			let attributes = attributesContent
 
 			let credentials = u.getCredentials({ vscode })
-			let code = u.getCode({ vscode, model, controller })
+			let code = u.getCode({ vscode, model, controller, attributes })
 
 			let { data } = await uploadToProlibu({ credentials, code })
 			vscode.window.showInformationMessage('Sync ' + data + '.')

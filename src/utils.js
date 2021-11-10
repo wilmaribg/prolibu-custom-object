@@ -33,8 +33,14 @@ function getCredentials(context) {
 }
 
 function getCode (context) {
-  const { model, controller } = context
+  const { model, controller, attributes } = context
   const code = []
+
+  code.push({
+    type: 'attributes',
+    keyname: 'attributes',
+    content: attributes
+  })
 
   const modelKeys = Object.keys(model)
   for (let index = 0; index < modelKeys.length; index++) {
