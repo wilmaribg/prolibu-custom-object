@@ -38,8 +38,28 @@ function activate(context) {
 			let credentials = u.getCredentials({ vscode })
 			let code = u.getCode({ vscode, model, controller, attributes })
 
-			let { data } = await uploadToProlibu({ credentials, code })
-			vscode.window.showInformationMessage('Sync ' + data + '.')
+			vscode.window.showInformationMessage(JSON.stringify(credentials, null, 2))
+
+			let result = null
+
+			if (Array.isArray(credentials)) {
+				const dataList = []
+				for (let index = 0; index < credentials.length; index++) {
+					let { data } = await uploadToProlibu({ credentials: credentials[index], code })
+					vscode.window.showInformationMessage(data.toString())
+					dataList.push(data)
+				}
+				result = dataList
+			} else {
+				let { data } = await uploadToProlibu({ credentials, code })
+				result = data
+			}
+
+			vscode.window.showInformationMessage(result.toString())
+
+			setTimeout(() => {
+				vscode.window.showInformationMessage('Sync ' + result.toString() + '.')
+			}, 15000);
 		} catch (err) {
 			vscode.window.showErrorMessage(err)
 		}

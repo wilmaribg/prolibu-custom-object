@@ -25,10 +25,23 @@ function loadEnv(context) {
 
 function getCredentials(context) {
   const _env = loadEnv(context)
+  if (/\,/gi.test(_env.env.PROLIBU_ACCOUNT)) {
+    const credentials = []
+    const accountSplit = _env.env.PROLIBU_ACCOUNT.split(/\,/gi)
+    const apiKeysSplit = _env.env.PROLIBU_API_KEY.split(/\,/gi)
+    for (let index = 0; index < accountSplit.length; index++) {
+      credentials.push({
+        domain: accountSplit[index],
+        apiKey: apiKeysSplit[index],
+        secrect: _env.env.PROLIBU_SECRET
+      })
+    }
+    return credentials
+  }
   return  {
     domain: _env.env.PROLIBU_ACCOUNT,
     apiKey: _env.env.PROLIBU_API_KEY,
-    secrect: _env.env.PROLIBU_SECRET,
+    secrect: _env.env.PROLIBU_SECRET
   }
 }
 
