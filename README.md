@@ -1,4 +1,18 @@
 # prolibu-custom-object README
+___
+## Publish extention
+
+Compile vsix:
+```bash
+npm run genvsix
+```
+
+### Publish version:
+```bash
+npm run publish --path prolibu-custom-object-1.0.2.vsix 
+```
+
+___
 
 "prolibu-custom-object". After writing up a brief description, we recommend including the following sections.
 

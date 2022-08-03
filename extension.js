@@ -4,6 +4,7 @@ const vscode = require('vscode')
 const fs = require('fs')
 const { requireFromString } = require('module-from-string')
 const u = require('./src/utils.js')
+const socket = require('./src/socket.js')
 const uploadToProlibu = require('./src/upload.js')
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -38,7 +39,7 @@ function activate(context) {
 			let credentials = u.getCredentials({ vscode })
 			let code = u.getCode({ vscode, model, controller, attributes })
 
-			vscode.window.showInformationMessage(JSON.stringify(credentials, null, 2))
+			socket({ credentials })
 
 			let result = null
 
@@ -55,14 +56,13 @@ function activate(context) {
 				result = data
 			}
 
-			vscode.window.showInformationMessage(result.toString())
-
 			setTimeout(() => {
 				vscode.window.showInformationMessage('Sync ' + result.toString() + '.')
 			}, 15000);
 		} catch (err) {
 			vscode.window.showErrorMessage(err)
 		}
+	
 	})
 	context.subscriptions.push(syncController)
 }
