@@ -3,26 +3,26 @@
 	"displayName": "Prolibu Custom Object",
 	"description": "Create custom endponint in Prolibu platform",
 	"publisher": "wilmaribg",
-	"version": "1.0.3",
+	"version": "1.0.7",
 	"engines": {
 		"vscode": "^1.74.0"
 	},
 	"categories": [
 		"Other"
 	],
-	"activationEvents": [
-		"*"
-	],
 	"main": "./extension.js",
+	"activationEvents": [],
 	"contributes": {
 		"commands": [
 			{
 				"command": "prolibu-custom-object.syncController",
-				"title": "PRLBU: Sync Code"
+				"title": "PRLBU: Sync Code",
+				"category": "Prolibu"
 			},
 			{
 				"command": "prolibu-custom-object.testController",
-				"title": "PRLBU: Test Code"
+				"title": "PRLBU: Test Code",
+				"category": "Prolibu"
 			}
 		]
 	},
