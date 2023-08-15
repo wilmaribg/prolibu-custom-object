@@ -64,7 +64,15 @@ function activate(context) {
 		}
 	
 	})
+	let testController = vscode.commands.registerCommand('prolibu-custom-object.testController', async function () {
+		try {
+			vscode.window.showInformationMessage('Run successfull Test Controller')
+		} catch(err) {
+			vscode.window.showErrorMessage(err)
+		}
+ 	})
 	context.subscriptions.push(syncController)
+	context.subscriptions.push(testController)
 }
 
 // this method is called when your extension is deactivated
