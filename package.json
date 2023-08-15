@@ -31,6 +31,7 @@
 		"url": "git://github.com/wilmaribg/prolibu-custom-object.git"
 	},
 	"scripts": {
+		"build": "npm run genvsix",
 		"genvsix": "vsce package",
 		"publish": "vsce publish --packagePath $npm_config_path",
 		"lint": "eslint .",
